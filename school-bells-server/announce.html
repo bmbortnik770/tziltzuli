@@ -1,0 +1,389 @@
+﻿<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>כריזה חיה – צילצולי</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .card {
+      background: white;
+      border-radius: 32px;
+      padding: 40px 28px;
+      width: 100%;
+      max-width: 380px;
+      box-shadow: 0 24px 60px rgba(30, 64, 175, 0.15);
+      text-align: center;
+    }
+
+    .logo { font-size: 52px; margin-bottom: 12px; }
+    h1 { font-size: 26px; font-weight: 900; color: #1e40af; margin-bottom: 6px; }
+    .subtitle { color: #94a3b8; font-size: 14px; font-weight: 600; margin-bottom: 32px; }
+
+    /* PIN Section */
+    #pin-section { display: block; }
+    #record-section { display: none; }
+
+    .pin-label {
+      color: #475569;
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .pin-input {
+      width: 100%;
+      padding: 18px;
+      border: 2.5px solid #e2e8f0;
+      border-radius: 18px;
+      font-size: 28px;
+      text-align: center;
+      letter-spacing: 10px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      margin-bottom: 14px;
+      color: #1e40af;
+      font-weight: 900;
+    }
+    .pin-input:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 18px;
+      border: none;
+      border-radius: 18px;
+      font-size: 17px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: all 0.15s;
+      touch-action: manipulation;
+    }
+    .btn-blue { background: #2563eb; color: white; }
+    .btn-blue:active { transform: scale(0.97); background: #1d4ed8; }
+
+    .error-box {
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1.5px solid #fecaca;
+      padding: 12px 16px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 14px;
+      display: none;
+    }
+    .error-box.show { display: block; }
+
+    /* Record Section */
+    .user-name {
+      background: #eff6ff;
+      color: #1e40af;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 13px;
+      display: inline-block;
+      margin-bottom: 24px;
+    }
+
+    .record-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .record-btn {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: none;
+      background: #2563eb;
+      color: white;
+      font-size: 52px;
+      cursor: pointer;
+      transition: all 0.15s;
+      box-shadow: 0 10px 36px rgba(37, 99, 235, 0.4);
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .record-btn:active { transform: scale(0.94); }
+    .record-btn.recording {
+      background: #dc2626;
+      box-shadow: 0 10px 36px rgba(220, 38, 38, 0.45);
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+    .record-btn:disabled {
+      background: #94a3b8;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 10px 36px rgba(220, 38, 38, 0.45); }
+      50% { transform: scale(1.06); box-shadow: 0 14px 48px rgba(220, 38, 38, 0.6); }
+    }
+
+    .timer {
+      font-size: 44px;
+      font-weight: 900;
+      color: #dc2626;
+      font-variant-numeric: tabular-nums;
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 4px;
+    }
+
+    .status-text {
+      font-size: 16px;
+      font-weight: 700;
+      color: #64748b;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 8px;
+    }
+    .status-text.recording { color: #dc2626; }
+    .status-text.success { color: #16a34a; }
+    .status-text.error { color: #dc2626; }
+    .status-text.sending { color: #2563eb; }
+
+    .instruction {
+      color: #cbd5e1;
+      font-size: 13px;
+      font-weight: 600;
+      margin-top: 16px;
+    }
+
+    .logout-btn {
+      background: none;
+      border: 1.5px solid #e2e8f0;
+      color: #94a3b8;
+      padding: 10px 22px;
+      border-radius: 14px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: all 0.15s;
+    }
+    .logout-btn:active { background: #f8fafc; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">📢</div>
+    <h1>כריזה חיה</h1>
+    <p class="subtitle">מערכת צילצולי</p>
+
+    <!-- PIN Section -->
+    <div id="pin-section">
+      <p class="pin-label">הזן קוד PIN לכניסה</p>
+      <div class="error-box" id="pin-error"></div>
+      <input
+        class="pin-input"
+        id="pin-input"
+        type="password"
+        inputmode="numeric"
+        pattern="[0-9]*"
+        placeholder="••••"
+        maxlength="8"
+        autocomplete="off"
+      />
+      <button class="btn btn-blue" onclick="checkPin()">כניסה</button>
+    </div>
+
+    <!-- Record Section -->
+    <div id="record-section">
+      <div class="user-name">✅ מחובר – מנהל</div>
+      <div class="record-wrap">
+        <div class="timer" id="timer">&#8203;</div>
+        <button class="record-btn" id="record-btn" onclick="toggleRecord()">🎤</button>
+        <div class="status-text" id="status">לחץ כדי להתחיל הקלטה</div>
+      </div>
+      <p class="instruction">לחץ להקלטה • לחץ שוב לשליחה מיידית</p>
+      <button class="logout-btn" onclick="logout()">התנתק</button>
+    </div>
+  </div>
+
+  <script>
+    let pin = '';
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let isRecording = false;
+    let timerInterval = null;
+    let seconds = 0;
+
+    document.getElementById('pin-input').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') checkPin();
+    });
+
+    async function checkPin() {
+      const val = document.getElementById('pin-input').value.trim();
+      if (!val) return;
+
+      try {
+        const res = await fetch('/api/announce/check-pin', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pin: val })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          showPinError(data.error || 'קוד שגוי, נסה שוב');
+          return;
+        }
+        pin = val;
+        showSection('record');
+      } catch (e) {
+        showPinError('שגיאת חיבור לשרת');
+      }
+    }
+
+    function showPinError(msg) {
+      const el = document.getElementById('pin-error');
+      el.textContent = msg;
+      el.classList.add('show');
+      document.getElementById('pin-input').value = '';
+      document.getElementById('pin-input').focus();
+      setTimeout(() => el.classList.remove('show'), 4000);
+    }
+
+    function showSection(section) {
+      document.getElementById('pin-section').style.display = section === 'pin' ? 'block' : 'none';
+      document.getElementById('record-section').style.display = section === 'record' ? 'block' : 'none';
+    }
+
+    function logout() {
+      pin = '';
+      if (isRecording) stopRecording();
+      showSection('pin');
+    }
+
+    async function toggleRecord() {
+      if (!isRecording) {
+        await startRecording();
+      } else {
+        stopRecording();
+      }
+    }
+
+    async function startRecording() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        audioChunks = [];
+
+        // בחירת פורמט שמע נתמך
+        const types = [
+          'audio/webm;codecs=opus',
+          'audio/webm',
+          'audio/ogg;codecs=opus',
+          'audio/ogg',
+          'audio/mp4',
+        ];
+        const mimeType = types.find(t => MediaRecorder.isTypeSupported(t)) || '';
+
+        mediaRecorder = new MediaRecorder(stream, mimeType ? { mimeType } : {});
+        mediaRecorder.ondataavailable = (e) => {
+          if (e.data && e.data.size > 0) audioChunks.push(e.data);
+        };
+        mediaRecorder.start(200);
+
+        isRecording = true;
+        seconds = 0;
+        updateTimer();
+        timerInterval = setInterval(updateTimer, 1000);
+
+        const btn = document.getElementById('record-btn');
+        btn.classList.add('recording');
+        btn.textContent = '⏹';
+        setStatus('מקליט... לחץ שוב לסיום', 'recording');
+
+      } catch (e) {
+        setStatus('אין גישה למיקרופון', 'error');
+      }
+    }
+
+    function stopRecording() {
+      if (!mediaRecorder || mediaRecorder.state === 'inactive') return;
+
+      clearInterval(timerInterval);
+      document.getElementById('timer').textContent = '';
+      isRecording = false;
+
+      const btn = document.getElementById('record-btn');
+      btn.classList.remove('recording');
+      btn.textContent = '🎤';
+      btn.disabled = true;
+      setStatus('שולח לרמקולים...', 'sending');
+
+      mediaRecorder.onstop = async () => {
+        const mimeType = mediaRecorder.mimeType || 'audio/webm';
+        const blob = new Blob(audioChunks, { type: mimeType });
+        mediaRecorder.stream.getTracks().forEach(t => t.stop());
+        await sendAudio(blob, mimeType);
+        btn.disabled = false;
+      };
+
+      mediaRecorder.stop();
+    }
+
+    async function sendAudio(blob, mimeType) {
+      try {
+        const ext = mimeType.includes('ogg') ? 'ogg' : mimeType.includes('mp4') ? 'mp4' : 'webm';
+        const formData = new FormData();
+        formData.append('audio', blob, `announce.${ext}`);
+        formData.append('pin', pin);
+
+        const res = await fetch('/api/announce', { method: 'POST', body: formData });
+        const data = await res.json();
+
+        if (!res.ok) {
+          setStatus(data.error || 'שגיאה בשליחה', 'error');
+        } else {
+          setStatus('✅ מתנגן ברמקולים!', 'success');
+          setTimeout(() => setStatus('לחץ כדי להתחיל הקלטה', ''), 3000);
+        }
+      } catch (e) {
+        setStatus('שגיאת רשת – בדוק חיבור', 'error');
+        setTimeout(() => setStatus('לחץ כדי להתחיל הקלטה', ''), 3000);
+      }
+    }
+
+    function updateTimer() {
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      document.getElementById('timer').textContent = `${m}:${s.toString().padStart(2, '0')}`;
+      seconds++;
+    }
+
+    function setStatus(msg, cls) {
+      const el = document.getElementById('status');
+      el.textContent = msg;
+      el.className = 'status-text ' + (cls || '');
+    }
+  </script>
+</body>
+</html>

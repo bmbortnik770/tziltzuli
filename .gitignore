@@ -1,0 +1,14 @@
+school-bells-server/node_modules/
+school-bells-ui/node_modules/
+school-bells-server/settings.db
+school-bells-server/uploads/
+school-bells-server/cert.pem
+school-bells-server/key.pem
+school-bells-server/cloudflared.exe
+school-bells-ui/dist/
+school-bells-ui/cert.pem
+school-bells-ui/key.pem
+school-bells-ui/settings.db
+*.tmp
+~$*
+tziltzuli-update-*.zip

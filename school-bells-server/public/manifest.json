@@ -1,0 +1,19 @@
+{
+  "name": "צילצולי - מערכת צלצולים",
+  "short_name": "צילצולי",
+  "description": "מערכת צלצולים חכמה לבתי ספר",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F7F9FB",
+  "theme_color": "#2563eb",
+  "dir": "rtl",
+  "lang": "he",
+  "icons": [
+    {
+      "src": "/bell-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

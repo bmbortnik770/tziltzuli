@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>צילצולי – מערכת צלצולים חכמה לבית הספר</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;800;900&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Heebo', Arial, sans-serif;
+      background: #f0f4ff;
+      color: #1e293b;
+      direction: rtl;
+    }
+
+    .page {
+      max-width: 800px;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(37,99,235,0.13);
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #3b82f6 100%);
+      padding: 52px 48px 44px;
+      color: white;
+      position: relative;
+    }
+    .header-logo {
+      font-size: 64px;
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+    .header h1 {
+      font-size: 42px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin-bottom: 6px;
+    }
+    .header .tagline {
+      font-size: 18px;
+      font-weight: 400;
+      opacity: 0.88;
+    }
+    .header-badge {
+      position: absolute;
+      top: 44px;
+      left: 48px;
+      background: #fbbf24;
+      color: #1e293b;
+      font-weight: 900;
+      font-size: 13px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Body sections */
+    .body { padding: 40px 48px; }
+
+    .intro {
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 1.75;
+      color: #334155;
+      margin-bottom: 36px;
+      border-right: 4px solid #3b82f6;
+      padding-right: 18px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #1d4ed8;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Feature grid */
+    .features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 40px;
+    }
+    .feature-card {
+      background: #f8faff;
+      border: 1.5px solid #dbeafe;
+      border-radius: 16px;
+      padding: 18px 20px;
+    }
+    .feature-card .icon { font-size: 26px; margin-bottom: 8px; }
+    .feature-card h3 { font-size: 15px; font-weight: 800; color: #1e40af; margin-bottom: 5px; }
+    .feature-card p { font-size: 13px; color: #475569; line-height: 1.6; }
+
+    /* Steps */
+    .steps { margin-bottom: 40px; }
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    .step-num {
+      min-width: 36px;
+      height: 36px;
+      background: #2563eb;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .step-text h4 { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+    .step-text p { font-size: 13px; color: #64748b; line-height: 1.5; }
+
+    /* Requirements */
+    .requirements {
+      background: #f8faff;
+      border: 1.5px solid #dbeafe;
+      border-radius: 16px;
+      padding: 22px 24px;
+      margin-bottom: 40px;
+    }
+    .req-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 0;
+      font-size: 14px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .req-item:last-child { border-bottom: none; }
+    .req-dot {
+      width: 8px; height: 8px;
+      background: #3b82f6;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Pricing box */
+    .pricing-box {
+      background: linear-gradient(135deg, #1d4ed8, #2563eb);
+      border-radius: 20px;
+      padding: 32px 36px;
+      color: white;
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .pricing-box .price-label { font-size: 17px; font-weight: 400; opacity: 0.85; margin-bottom: 6px; }
+    .pricing-box .price-amount { font-size: 54px; font-weight: 900; line-height: 1; }
+    .pricing-box .price-sub { font-size: 15px; opacity: 0.75; margin-top: 4px; }
+    .pricing-includes { list-style: none; }
+    .pricing-includes li {
+      font-size: 14px;
+      padding: 4px 0;
+      opacity: 0.92;
+    }
+    .pricing-includes li::before { content: '✓  '; font-weight: 900; }
+
+    /* Highlight pills */
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 40px;
+    }
+    .pill {
+      background: #eff6ff;
+      border: 1.5px solid #bfdbfe;
+      color: #1d4ed8;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 7px 16px;
+      border-radius: 999px;
+    }
+
+    /* Footer */
+    .footer {
+      background: #f8faff;
+      border-top: 1.5px solid #dbeafe;
+      padding: 28px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .footer-brand { font-size: 20px; font-weight: 900; color: #1d4ed8; }
+    .footer-contact { font-size: 13px; color: #64748b; line-height: 1.8; text-align: left; }
+    .footer-contact a { color: #2563eb; text-decoration: none; font-weight: 600; }
+
+    @media print {
+      body { background: white; }
+      .page { box-shadow: none; margin: 0; border-radius: 0; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-badge">🇮🇱 מיוצר בישראל</div>
+    <div class="header-logo">🔔</div>
+    <h1>צילצולי</h1>
+    <div class="tagline">מערכת צלצולים חכמה לבית הספר – פתרון אוטומטי, פשוט ואמין</div>
+  </div>
+
+  <!-- Body -->
+  <div class="body">
+
+    <!-- Intro -->
+    <p class="intro">
+      <strong>צילצולי</strong> היא מערכת ניהול צלצולים דיגיטלית לבתי ספר, המחליפה את הצלצול הידני בתזמון אוטומטי מלא.
+      המערכת פועלת מהמחשב הקיים בבית הספר, ניתנת לניהול מרחוק מהטלפון, ותומכת בחגים, חופשות, לוחות שעות מרובים ואזעקת חירום.
+    </p>
+
+    <!-- Features -->
+    <div class="section-title">✨ יכולות המערכת</div>
+    <div class="features">
+      <div class="feature-card">
+        <div class="icon">⏰</div>
+        <h3>תזמון אוטומטי מלא</h3>
+        <p>צלצולים מתזמנים לפי לוח שעות יומי/שבועי. המערכת פועלת לבד ללא צורך בהתעסקות יומיומית.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🎵</div>
+        <h3>מנגינות מותאמות אישית</h3>
+        <p>ניתן להעלות כל קובץ מוזיקה ולשייך מנגינה שונה לכל סוג צלצול – שיעור, הפסקה, כניסה ויציאה.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📱</div>
+        <h3>ניהול מרחוק מהטלפון</h3>
+        <p>גישה מלאה לממשק הניהול מכל טלפון דרך הרשת הפנימית או חיבור מאובטח מחוץ לבית הספר.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">✡️</div>
+        <h3>לוח שנה עברי מובנה</h3>
+        <p>ייבוא חופשות ישירות מקובץ Excel. תמיכה אוטומטית בחגים ומועדים בלוח השנה הישראלי.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📋</div>
+        <h3>לוחות שעות מרובים</h3>
+        <p>יצירת תבניות לוח שעות שונות (רגיל, קצר, מיוחד) ומיתוג אוטומטי לפי ימים ותאריכים.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🚨</div>
+        <h3>אזעקת חירום מיידית</h3>
+        <p>כפתור חירום בלחיצה אחת מפעיל אזעקה בכל הרמקולים. היסטוריית אירועי חירום נשמרת אוטומטית.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🔊</div>
+        <h3>כריזה קולית</h3>
+        <p>הפעלת כריזה קולית ישירות מהממשק דרך מיקרופון המחשב, ללא ציוד נוסף.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">💾</div>
+        <h3>גיבוי וייצוא</h3>
+        <p>ייצוא הגדרות המערכת לקובץ גיבוי. שחזור מלא בלחיצה אחת.</p>
+      </div>
+    </div>
+
+    <!-- How it works -->
+    <div class="section-title">⚙️ איך זה עובד?</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text">
+          <h4>התקנה על המחשב הקיים</h4>
+          <p>המערכת מותקנת על מחשב Windows קיים בבית הספר. אין צורך בשרת נפרד או חומרה חדשה.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text">
+          <h4>הגדרת לוח שעות</h4>
+          <p>מגדירים את שעות הצלצולים לפי הצורך, מעלים מנגינות ומייבאים חופשות מ-Excel.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text">
+          <h4>המערכת עובדת לבד</h4>
+          <p>המערכת מתזמנת את הצלצולים אוטומטית. ניתן לנהל ולשנות הגדרות בכל עת, גם מרחוק מהטלפון.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Requirements -->
+    <div class="section-title">🖥️ דרישות טכניות</div>
+    <div class="requirements">
+      <div class="req-item"><span class="req-dot"></span> מחשב Windows 10 ומעלה (קיים בבית הספר)</div>
+      <div class="req-item"><span class="req-dot"></span> רמקולים המחוברים למחשב</div>
+      <div class="req-item"><span class="req-dot"></span> חיבור לרשת Wi-Fi הפנימית של בית הספר</div>
+      <div class="req-item"><span class="req-dot"></span> אין צורך בחיבור לאינטרנט לפעולה שוטפת</div>
+      <div class="req-item"><span class="req-dot"></span> תמיכה בכל טלפון חכם לניהול מרחוק</div>
+    </div>
+
+    <!-- Highlights -->
+    <div class="pills">
+      <span class="pill">✅ ללא מנוי חודשי</span>
+      <span class="pill">✅ רישיון לצמיתות</span>
+      <span class="pill">✅ התקנה וסיוע כלולים</span>
+      <span class="pill">✅ ממשק בעברית מלאה</span>
+      <span class="pill">✅ עובד גם ללא אינטרנט</span>
+      <span class="pill">✅ מתאים לכל בית ספר</span>
+    </div>
+
+    <!-- Pricing -->
+    <div class="section-title">💰 מחיר</div>
+    <div class="pricing-box">
+      <div>
+        <div class="price-label">מחיר חד-פעמי לרישיון מלא</div>
+        <div class="price-amount">₪300</div>
+        <div class="price-sub">תשלום חד פעמי · ללא מנויים · לצמיתות</div>
+      </div>
+      <ul class="pricing-includes">
+        <li>התקנה מלאה על המחשב</li>
+        <li>הדרכה לצוות</li>
+        <li>הגדרת לוח שעות ראשוני</li>
+        <li>תמיכה טכנית</li>
+        <li>עדכוני תוכנה</li>
+      </ul>
+    </div>
+
+  </div><!-- /body -->
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-brand">🔔 צילצולי</div>
+    <div class="footer-contact">
+      לפרטים נוספים והזמנה:<br/>
+      <a href="mailto:bmbortnik770@gmail.com">bmbortnik770@gmail.com</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
